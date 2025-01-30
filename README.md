@@ -1,6 +1,7 @@
-Electronic Products Price comparison  across Reliance and Croma using AI Agents. Plan is to implement this using different Agent frameworks to compare ease of use etc. 
+An exercise to learn various AI Agent frameworks and tools by applying them for a simple use case of comparing product prices across two digital product websites: Reliance Digital, and Croma
 
-1) n8n Workflow
-2) LlamaIndex
-3) smolagents??
-4) 
+- [x] n8n Workflow
+- [x] LlamaIndex
+- [ ] smolagents
+- [ ] LangGraph
+- [ ] Pydantic AI
