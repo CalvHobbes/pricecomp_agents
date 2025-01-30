@@ -1,0 +1,218 @@
+{
+  "name": "Price Comparison Tool for Electronics India",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Hi there! 👋\nMy name is Hobbes. How can I assist you today?",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "46cbeeab-78bf-4d15-8e5e-dd73fb39afb4",
+      "name": "When chat message received",
+      "webhookId": "6529d59e-8091-4631-ae5b-e0db1b711ea3"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "\"You are an intelligent assistant tasked with analyzing and combining product price data by executing one or more tools available to you. to run the tools you must provide them the name of the product the user is searching.. Your goal is to identify the most relevant product prices and present them in a structured format. Follow these steps:\n\nCombine Results: Analyze the product data from all websites. If product names or display names are slightly different but refer to the same product, use your judgment to group them together.\n\nIdentify the Best Prices: For each product, compare the prices across all websites and order them in ascending order (lowest price first).\n\nOutput Format: Present the results in the following structured format for each product:\n\nProduct Name: The most accurate or common name for the product.\n\nFor each store, include:\n\nStore Display Name: The name of the store.\n\nProduct URL: A clickable link to the product page.\n\nPrice: The price of the product at that store.\n\nEnsure the store-wise details are ordered by ascending price (cheapest first).\n\nHandle Ambiguities: If product names or details are unclear, use context to determine if they refer to the same product. If uncertain, list them separately.\n\nSample Result:\nProduct Name: Wireless Noise-Cancelling Headphones\n- Store: TechWorld, Product URL: [TechWorld Link], Price: $120\n- Store: GadgetHub, Product URL: [GadgetHub Link], Price: $125\n- Store: ElectroShop, Product URL: [ElectroShop Link], Price: $130\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        220,
+        0
+      ],
+      "id": "11c84e60-76c6-43b1-8cab-164096e49c65",
+      "name": "AI Agent",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.1,
+      "position": [
+        240,
+        220
+      ],
+      "id": "28e15b39-6512-4655-ae36-c1b074d0d8a0",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "ft3rinmgbVzxcwoE",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        380,
+        220
+      ],
+      "id": "8d1ab14d-0e2d-434e-a3e5-2091ccb71308",
+      "name": "Window Buffer Memory"
+    },
+    {
+      "parameters": {
+        "name": "Search_Reliance",
+        "description": "Call this tool to search for user specified product and get results from Reliance - one of the shopping sites we want to compare prices from. If html formatting is supported ,Output product names in red",
+        "workflowId": {
+          "__rl": true,
+          "value": "vxBhLH49DXbmXytb",
+          "mode": "list",
+          "cachedResultName": "Search Reliance Digital"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [
+            "query"
+          ],
+          "schema": [
+            {
+              "id": "query",
+              "displayName": "query",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2,
+      "position": [
+        640,
+        260
+      ],
+      "id": "808b2511-506b-4945-abfa-623c4a11ad2f",
+      "name": "Search Reliance"
+    },
+    {
+      "parameters": {
+        "name": "search_croma",
+        "description": "Call this tool to search for user specified product and get results from Croma - one of the shopping sites we want to compare prices from. If html formatting is supported, Output product names in royal blue",
+        "workflowId": {
+          "__rl": true,
+          "value": "cBcfmH36I3J7extT",
+          "mode": "list",
+          "cachedResultName": "Search Croma"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [
+            "query"
+          ],
+          "schema": [
+            {
+              "id": "query",
+              "displayName": "query",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2,
+      "position": [
+        520,
+        380
+      ],
+      "id": "7951b676-3fa8-4e65-9115-f41ee61f44bd",
+      "name": "Search Croma"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Reliance": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Croma": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "7e378096-1c99-4453-a47e-a2c3ec012138",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c1ed5e38e088e5cf30ebe8a5ab54c63936742c1034d69b57eb60cdeddf92b73b"
+  },
+  "id": "y5P7mrhXZl4JNX2O",
+  "tags": []
+}

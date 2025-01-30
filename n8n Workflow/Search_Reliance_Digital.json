@@ -1,0 +1,145 @@
+{
+  "name": "Search Reliance Digital",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "query"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -200,
+        420
+      ],
+      "id": "2fb0d787-3c0b-4e90-a619-3a2e107dd0a2",
+      "name": "Workflow Input Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "sourceData": "binary",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "=name",
+              "cssSelector": ".sp__product .sp__name",
+              "returnArray": true
+            },
+            {
+              "key": "url",
+              "cssSelector": "=.sp.grid a[attr-tag=\"anchor\"]",
+              "returnValue": "attribute",
+              "attribute": "href",
+              "returnArray": true
+            },
+            {
+              "key": "price",
+              "cssSelector": ".sp.grid .StyledPriceBoxM__PriceWrapper-sc-1l9ms6f-0 span > span:nth-of-type(2)",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {
+          "trimValues": true
+        }
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        380,
+        420
+      ],
+      "id": "f039e9f4-5149-4b4a-bbd9-c849dbcd93cf",
+      "name": "HTML",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "url": "=https://www.reliancedigital.in/search?q={{ encodeURIComponent( $json.query+ ':relevance') }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        120,
+        420
+      ],
+      "id": "6a4911de-1dbb-4b1d-9b01-3819be92040c",
+      "name": "Reliance HTML",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    }
+  ],
+  "pinData": {
+    "Workflow Input Trigger": [
+      {
+        "json": {
+          "query": "sony bravia"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Workflow Input Trigger": {
+      "main": [
+        [
+          {
+            "node": "Reliance HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reliance HTML": {
+      "main": [
+        [
+          {
+            "node": "HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "8677649f-5db5-4173-a357-5e116b6fa810",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c1ed5e38e088e5cf30ebe8a5ab54c63936742c1034d69b57eb60cdeddf92b73b"
+  },
+  "id": "vxBhLH49DXbmXytb",
+  "tags": [
+    {
+      "createdAt": "2025-01-29T12:40:56.292Z",
+      "updatedAt": "2025-01-29T12:40:56.292Z",
+      "id": "QGVqUXOwUjrtfzjS",
+      "name": "price_comp"
+    }
+  ]
+}

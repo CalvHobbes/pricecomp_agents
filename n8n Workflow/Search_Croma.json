@@ -1,0 +1,123 @@
+{
+  "name": "Search Croma",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "query"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -200,
+        420
+      ],
+      "id": "f4c3eea9-d685-493b-8295-034011e7dcff",
+      "name": "Workflow Input Trigger"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.croma.com/searchservices/v1/search?query={{ encodeURIComponent( $json.query+ ':relevance') }}&channel=WEB",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+            },
+            {
+              "name": "origin",
+              "value": "https://www.croma.com"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        140,
+        420
+      ],
+      "id": "a8711d01-7da8-4803-95fa-1d9d18c96c53",
+      "name": "Croma HTML",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all()\nconst flattenedProducts = items.flatMap(item => item.json.products);\nconst productList = flattenedProducts.map(product => ({\n  name: product.name,\n   url: 'https://www.croma.com' + product.url,\n      price: product.price.value\n}));\nreturn { productList: productList };"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        380,
+        420
+      ],
+      "id": "69e54a78-2a25-42d4-a120-04d00386a012",
+      "name": "Code"
+    }
+  ],
+  "pinData": {
+    "Workflow Input Trigger": [
+      {
+        "json": {
+          "query": "sony bravia"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Workflow Input Trigger": {
+      "main": [
+        [
+          {
+            "node": "Croma HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Croma HTML": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "97d46c77-d8bb-40ca-a451-a70775a1f96f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c1ed5e38e088e5cf30ebe8a5ab54c63936742c1034d69b57eb60cdeddf92b73b"
+  },
+  "id": "cBcfmH36I3J7extT",
+  "tags": [
+    {
+      "name": "price_comp",
+      "id": "QGVqUXOwUjrtfzjS",
+      "createdAt": "2025-01-29T12:40:56.292Z",
+      "updatedAt": "2025-01-29T12:40:56.292Z"
+    }
+  ]
+}
