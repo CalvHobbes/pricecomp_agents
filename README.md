@@ -5,3 +5,4 @@ An exercise to learn various AI Agent frameworks and tools by applying them for 
 - [ ] smolagents
 - [ ] LangGraph
 - [ ] Pydantic AI
+- [ ] CrewAI
