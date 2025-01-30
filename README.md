@@ -1,2 +1,2 @@
 # shop_india
-Product Price comparison and review site
+Electronic Products Price comparison  across Reliance and Croma
