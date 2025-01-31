@@ -31,6 +31,6 @@ def fetch_prices_from_reliance(product):
     return product_list
 
 # Example usage
-query = "sony bravia"
-prices = fetch_prices_from_reliance(query)
-print(json.dumps(prices, indent=4))
+# query = "sony bravia"
+# prices = fetch_prices_from_reliance(query)
+# print(json.dumps(prices, indent=4))

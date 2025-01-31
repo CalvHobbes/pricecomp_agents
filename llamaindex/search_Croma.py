@@ -40,6 +40,6 @@ def fetch_prices_from_croma(product):
     return product_list
 
 # Example usage
-query = "sony bravia"
-prices = fetch_prices_from_croma(query)
-print(json.dumps(prices, indent=4))
+# query = "sony bravia"
+# prices = fetch_prices_from_croma(query)
+# print(json.dumps(prices, indent=4))
