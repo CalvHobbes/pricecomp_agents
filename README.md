@@ -2,7 +2,7 @@ An exercise to learn various AI Agent frameworks and tools by applying them for 
 
 - [x] n8n Workflow
 - [x] LlamaIndex
-- [ ] smolagents
+- [x] smolagents
 - [ ] LangGraph
 - [ ] Pydantic AI
 - [ ] CrewAI
