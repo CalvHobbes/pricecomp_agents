@@ -1,4 +1,4 @@
-PydanticAI Agents -https://ai.pydantic.dev/
+[PydanticAI Agents](https://ai.pydantic.dev/)
  - support sync, async, stream
  - restrict usage (tokens), retry count on tools
  - support for type checking (input/output)
@@ -16,4 +16,4 @@ Multiple ways to use functions as tools :
     ],
 )```
 
-Dynaic function tools- Can modify usage/other attributes of a tool via "prepare"[see ToolPrepareFunc]. See https://ai.pydantic.dev/tools/#function-tools-and-schema
+Dynamic function tools- Can modify usage/other attributes of a tool via "prepare"[see ToolPrepareFunc]. See https://ai.pydantic.dev/tools/#function-tools-and-schema
