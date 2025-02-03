@@ -15,3 +15,5 @@ Multiple ways to use functions as tools :
         Tool(get_player_name, takes_ctx=True),
     ],
 )```
+
+Dynaic function tools- Can modify usage/other attributes of a tool via "prepare". See https://ai.pydantic.dev/tools/#function-tools-and-schema
