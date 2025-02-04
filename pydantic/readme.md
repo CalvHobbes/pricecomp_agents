@@ -18,4 +18,6 @@ Multiple ways to use functions as tools :
 
 Dynamic function tools- Can modify usage/other attributes of a tool via "prepare"[see ToolPrepareFunc]. See https://ai.pydantic.dev/tools/#function-tools-and-schema
 
-Instrunmentation support via Pydantic Logfire
+Instrumentation support via Pydantic Logfire
+
+More complex graph based workflows/ delegation possible.
